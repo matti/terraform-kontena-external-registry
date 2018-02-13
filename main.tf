@@ -11,6 +11,13 @@ locals {
 resource "null_resource" "kontena_external_registry" {
   depends_on = ["null_resource.start"]
 
+  triggers = {
+    # url can not trigger because remove will fail
+    username = "${var.username}"
+    email    = "${var.email}"
+    password = "${var.password}"
+  }
+
   provisioner "local-exec" {
     command = <<EOF
 kontena external-registry add \
